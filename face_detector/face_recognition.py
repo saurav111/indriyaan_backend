@@ -19,6 +19,8 @@ from facerec.serialization import save_model, load_model
 # from facedet.detector import CascadedDetector
 
 def detailsOfRecognizedPeople(image):
+    FACE_DETECTOR_PATH = "{base_path}/haarcascade_frontalface_alt2.xml".format(base_path=os.path.abspath(os.path.dirname(__file__)))
+    MODEL_PATH = "{base_path}/robin_saurav_final.pkl".format(base_path=os.path.abspath(os.path.dirname(__file__)))
     class App(object):
         def __init__(self, model, cascade_filename):
             self.model = model
@@ -49,8 +51,8 @@ def detailsOfRecognizedPeople(image):
             data_frame.update({"num_faces":len(rects),"faces":rects.tolist(),"identities":person_names,"success":True})
             return data_frame
 
-    model_filename = "/home/saurav/Desktop/indriyaan/cv_api/face_detector/robin_saurav_final.pkl"
+    model_filename = MODEL_PATH
     print "Loading the model..."
     model = load_model(model_filename)
-    recognizer = App(model=model,cascade_filename="/home/saurav/Desktop/indriyaan/cv_api/face_detector/haarcascade_frontalface_alt2.xml")
+    recognizer = App(model=model,cascade_filename=FACE_DETECTOR_PATH)
     return recognizer.run(image)
